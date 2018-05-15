@@ -1,0 +1,17 @@
+{
+	"name": "Yemeksepeti Randomer",
+	"version": "2.0",
+	"description": "Yemeksepeti başında 2 saat geçirip hala yemek söyleyemeyen arkadaşlar için karar robotu.",
+	"icons": {
+		"128": "app/img/icon128.png",
+		"48": "app/img/icon48.png",
+		"16": "app/img/icon16.png"
+	},
+	"manifest_version": 2,
+	"content_scripts": [ {
+		"js": [ "app/vendor/jquery.min.js", "app/app.js" ],
+		"css": ["app/css/main.css"],
+		"matches": ["*://*.yemeksepeti.com/*"],
+		"run_at": "document_end"
+	}]
+}
