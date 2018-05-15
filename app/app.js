@@ -105,7 +105,7 @@ $(document).ready(() => {
 		speed.html("Hız: " + selected.restaurant.speed);
 		flavour.html("Lezzet: " + selected.restaurant.flavour);
 		service.html("Servis: " + selected.restaurant.serving);
-		description.html(restaurants.length + " adet restorant ve " + menu.length + " adet ürün içinden bu ürün seçildi.");
+		description.html(restaurants.length + " adet restoran ve " + menu.length + " adet ürün içinden bu ürün seçildi.");
 		itemName.html(selected.menu.productName);
 		itemPrice.html(selected.menu.price);
 
