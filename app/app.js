@@ -5,7 +5,7 @@ $(document).ready(() => {
 
 		let html = "";
 		html += '<div class="ys-basket"><div class="header">';
-		html += '<span>RASTGELE YEMEK</span>';
+		html += '<span>RASTGELE YEMEK</span><ul><li><a href="javascript: void(0);" class="getRandomOne"><i class="ys-icons ys-icons-Standard-icons-repeatable-white"></i></a></li></ul>';
 		html += '</div>';
 		html += '<div class="location">';
 		html += '<a class="restaurantInfo restName" href="#">';
@@ -43,7 +43,7 @@ $(document).ready(() => {
 		html += '</td></tr></tbody>';
 		html += '</table>';
 		html += '<div class="actions">';
-		html += '<button class="ys-btn ys-btn-block ys-btn-primary confirm-basket ys-btn-yellowerror">SEPETE EKLE</button>';
+		html += '<button class="ys-btn ys-btn-block ys-btn-primary confirm-basket ys-btn-yellowerror addToBasketRandom">SEPETE EKLE</button>';
 		html += '<span class="basketMessage descriptionRandom" style="margin:13px 0px;"></span>';
 		html += '</div>';
 		html += '</div>';
@@ -55,74 +55,85 @@ $(document).ready(() => {
 
 	};
 
-	const getCookie = (name) => {
-		const cookieString=RegExp(""+name+"[^;]+").exec(document.cookie);
-		return decodeURIComponent(!!cookieString ? cookieString.toString().replace(/^[^=]+./,"") : ""); 
-	}
+	initDOM();
 
-	const tokens = {
-		token: getCookie('loginToken'),
-		areaId: getCookie('selectedAreaId'),
-		catalogName: getCookie('catalogName')
-	}
+	const getRandom = () => {
 
-	const selected = {
-		restaurant: {
-
-		},
-		menu: {
-
+		const getCookie = (name) => {
+			const cookieString=RegExp(""+name+"[^;]+").exec(document.cookie);
+			return decodeURIComponent(!!cookieString ? cookieString.toString().replace(/^[^=]+./,"") : ""); 
 		}
-	}
 
-	const urls = {
-		restaurants: 'https://service.yemeksepeti.com/YS.WebServices/CatalogService.svc/SearchRestaurants'
-	}
-
-	const restaurants = [
-
-	]
-	
-	const menu = [
-	
-	]
-
-	const fillDOM = () => {
-		initDOM();
-		let logo = $(".restLogo");
-		let restaurantName = $(".restName");
-		let minimumPay = $(".minimumPay");
-		let flavour = $(".flavour");
-		let speed = $(".speed");
-		let service = $(".service");
-		let description = $(".descriptionRandom");
-		let itemName = $(".randomItemName");
-		let itemPrice = $(".randomItemPrice");
-		logo.attr("src",selected.restaurant.img);
-		restaurantName.html(selected.restaurant.name);
-		restaurantName.attr("href",selected.restaurant.url);	
-		minimumPay.html("Min. Paket Tutarı: " + selected.restaurant.minimumPay + " TL");
-		speed.html("Hız: " + selected.restaurant.speed);
-		flavour.html("Lezzet: " + selected.restaurant.flavour);
-		service.html("Servis: " + selected.restaurant.serving);
-		description.html(restaurants.length + " adet restoran ve " + menu.length + " adet ürün içinden bu ürün seçildi.");
-		itemName.html(selected.menu.productName);
-		itemPrice.html(selected.menu.price);
-
-	}		
-
-
-	const setRandomMenu = () => {
-		if (menu.length >= 1) {
-			selected.menu = menu[Math.floor(Math.random()*menu.length)];
-			fillDOM();
+		const tokens = {
+			token: getCookie('loginToken'),
+			areaId: getCookie('selectedAreaId'),
+			catalogName: getCookie('catalogName')
 		}
-	}
-	
-	const getMenu = () => {
-		if (selected.restaurant.hasOwnProperty('url')) {
-			$.ajax({
-				beforeSend: (request) => {
+
+		const selected = {
+			restaurant: {
+
+			},
+			menu: {
+
+			}
+		}
+
+		const urls = {
+			restaurants: 'https://service.yemeksepeti.com/YS.WebServices/CatalogService.svc/SearchRestaurants'
+		}
+
+		const restaurants = [
+
+		]
+
+		const menu = [
+
+		]
+
+		const fillDOM = () => {
+
+			let logo = $(".restLogo");
+			let restaurantName = $(".restName");
+			let minimumPay = $(".minimumPay");
+			let flavour = $(".flavour");
+			let speed = $(".speed");
+			let service = $(".service");
+			let description = $(".descriptionRandom");
+			let itemName = $(".randomItemName");
+			let itemPrice = $(".randomItemPrice");
+			let addToBasketRandom = $(".addToBasketRandom");
+
+
+			logo.attr("src",selected.restaurant.img);
+			restaurantName.html(selected.restaurant.name);
+			restaurantName.attr("href",selected.restaurant.url);	
+			minimumPay.html("Min. Paket Tutarı: " + selected.restaurant.minimumPay + " TL");
+			speed.html("Hız: " + selected.restaurant.speed);
+			flavour.html("Lezzet: " + selected.restaurant.flavour);
+			service.html("Servis: " + selected.restaurant.serving);
+			description.html(restaurants.length + " adet restoran ve " + menu.length + " adet ürün içinden bu ürün seçildi.");
+			itemName.html(selected.menu.productName);
+			itemPrice.html(selected.menu.price);
+			addToBasketRandom.attr("onClick",'document.location.href = "https:' + selected.restaurant.url + '?' + selected.menu.productId + '"');
+
+			
+
+
+		}		
+
+
+		const setRandomMenu = () => {
+			if (menu.length >= 1) {
+				selected.menu = menu[Math.floor(Math.random()*menu.length)];
+				fillDOM();
+			}
+		}
+
+		const getMenu = () => {
+			if (selected.restaurant.hasOwnProperty('url')) {
+				$.ajax({
+					beforeSend: (request) => {
 					// request.setRequestHeader("Origin",		"https://www.yemeksepeti.com");
 					// request.setRequestHeader("User-Agent",	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36 OPR/52.0.2871.99");
 					request.setRequestHeader("Referer-Type","https://www.yemeksepeti.com");
@@ -151,11 +162,13 @@ $(document).ready(() => {
 							let isCoke = productName.match("(Fanta|Ayran|Coca Cola|Cola|Kola|Su|Soda|Sprite|Cappy|Schweppes|Lipton|Şalgam|Gazoz|Fuse Tea|gazozu|Tea|Ice Tea)");
 
 							if (isCoke == null) {
-								menu.push({
-									productName: productName,
-									productId: productId,
-									price: price
-								});		
+								if (parseFloat(selected.restaurant.minimumPay) <= parseFloat(price)) {
+									menu.push({
+										productName: productName,
+										productId: productId,
+										price: price
+									});		
+								}
 							}		
 						}
 
@@ -164,23 +177,23 @@ $(document).ready(() => {
 					setTimeout(() => { setRandomMenu() },100);
 				},
 			});
+			}
 		}
-	}
 
 
 
-	const setRestaurant = () => {
-		if (restaurants.length >= 1) {
-			selected.restaurant = restaurants[Math.floor(Math.random()*restaurants.length)];
-			getMenu();
+		const setRestaurant = () => {
+			if (restaurants.length >= 1) {
+				selected.restaurant = restaurants[Math.floor(Math.random()*restaurants.length)];
+				getMenu();
+			}
 		}
-	}
 
 
 
-	$.ajax({
-		type: "POST",
-		url: urls.restaurants,
+		$.ajax({
+			type: "POST",
+			url: urls.restaurants,
 		// beforeSend: (request) => {
 		// 	// request.setRequestHeader("Origin",		"https://www.yemeksepeti.com");
 		// 	// request.setRequestHeader("User-Agent",	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36 OPR/52.0.2871.99");
@@ -192,17 +205,21 @@ $(document).ready(() => {
 			let list = data.d.ResultSet.searchResponseList;
 			
 			list.forEach((i,k) => {
-				restaurants.push({
-					name:i.DisplayName,
-					img:i.ImageFullPath.replace("/Category","Category"),
-					time:i.DeliveryTime,
-					flavour:i.DetailedFlavour,
-					serving:i.DetailedServing,
-					speed:i.DetailedSpeed,
-					minimumPay:i.MinimumDeliveryPriceText,
-					url:"//www.yemeksepeti.com" + i.SeoUrl
+				let isWater = i.DisplayName.match("(Su|Damacana|Nestle|Erikli|Sardes|Kaynak Su)");
 
-				});
+				if (isWater == null) {
+					restaurants.push({
+						name:i.DisplayName,
+						img:i.ImageFullPath.replace("/Category","Category"),
+						time:i.DeliveryTime,
+						flavour:i.DetailedFlavour,
+						serving:i.DetailedServing,
+						speed:i.DetailedSpeed,
+						minimumPay:i.MinimumDeliveryPriceText,
+						url:"//www.yemeksepeti.com" + i.SeoUrl
+
+					});
+				}
 			});
 
 			setTimeout(() => { setRestaurant() },100);
@@ -212,6 +229,37 @@ $(document).ready(() => {
 		contentType: "application/json; charset=utf-8",
 	});
 
+	}
 
+	getRandom();
+
+	$("body").on("click",".getRandomOne",function() {
+		
+		let logo = $(".restLogo");
+		let restaurantName = $(".restName");
+		let minimumPay = $(".minimumPay");
+		let flavour = $(".flavour");
+		let speed = $(".speed");
+		let service = $(".service");
+		let description = $(".descriptionRandom");
+		let itemName = $(".randomItemName");
+		let itemPrice = $(".randomItemPrice");
+		let addToBasketRandom = $(".addToBasketRandom");
+
+
+		logo.attr("src","https://www.yemeksepeti.com/assets/images/buttonLoading.gif");
+		restaurantName.html("...");
+		restaurantName.attr("href","...");	
+		minimumPay.html("Min. Paket Tutarı: ... TL");
+		speed.html("Hız: ...");
+		flavour.html("Lezzet: ...");
+		service.html("Servis: ...");
+		description.html("...");
+		itemName.html("...");
+		itemPrice.html("...");
+		addToBasketRandom.attr("onClick",'document.location.href = "#"');
+		getRandom();
+
+	});
 	
 });

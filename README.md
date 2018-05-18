@@ -17,10 +17,12 @@ Yemeksepeti başında 2 saat geçirip hala yemek söyleyemeyen arkadaşlar için
 
 - [x] Yeni tasarım ve konum
 - [x] Randomize ederken içerikler listeye dahil etme
+- [x] Sepete ekle butonunun çalıştırılması
+- [x] Damacana gibi restoranlar ı listeye dahil etme
+- [x] Min tutarın üstündeki ürünleri getir
 - [ ] Sosları da aynı şekilde randomize ederken listeye dahil etme
-- [ ]  Sepete ekle butonunun çalıştırılması
-- [ ]  Random çekilen yemekle ilgili yorumun getirilmesi
-- [ ]  Bulunulan yere göre en çok sipariş verilen ürün türü ve restoranın getirilmesi
+- [ ] Random çekilen yemekle ilgili yorumun getirilmesi
+- [ ] Bulunulan yere göre en çok sipariş verilen ürün türü ve restoranın getirilmesi
 
 ## Güncelleme Notları
 **Sürüm 2 Beta**
