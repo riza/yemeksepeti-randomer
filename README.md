@@ -11,7 +11,7 @@ Yemeksepeti başında 2 saat geçirip hala yemek söyleyemeyen arkadaşlar için
 
 ## Kurulum
 
-[Chrome Web Store](https://chrome.google.com/webstore/detail/yemeksepeti-randomer/igliafellpiefmfodeagieiloanlckoa) üzerinden indirebilirsiniz. (v1.0.1)
+[Chrome Web Store](https://chrome.google.com/webstore/detail/yemeksepeti-randomer/igliafellpiefmfodeagieiloanlckoa) üzerinden indirebilirsiniz.
 
 ## TODOS 
 
